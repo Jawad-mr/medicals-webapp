@@ -92,14 +92,49 @@ document.addEventListener('DOMContentLoaded', () => {
     return overlay;
   }
 
-  // Modals Setup
-  const rxModalOverlay = setupModal(['openRxModalBtnTop', 'openRxModalCard', 'openRxModalBtnBanner', 'openRxModalBtnFooter'], 'rxModalOverlay', 'closeRxModalBtn');
-  const doctorModalOverlay = setupModal(['doctorConsultCard', 'navDoctorBtn'], 'doctorModalOverlay', 'closeDoctorModalBtn');
-  const labTestModalOverlay = setupModal(['labTestsCard', 'navLabBtn'], 'labTestModalOverlay', 'closeLabTestModalBtn');
-  const insuranceModalOverlay = setupModal(['insuranceCard', 'navInsuranceBtn'], 'insuranceModalOverlay', 'closeInsuranceModalBtn');
-  const offersModalOverlay = setupModal(['bellFloatBtn', 'navOffersBtn'], 'offersModalOverlay', 'closeOffersModalBtn');
-  const locationModalOverlay = setupModal(['openLocationModalBtn'], 'locationModalOverlay', 'closeLocationModalBtn');
-  const loginModalOverlay = setupModal(['loginBtn'], 'loginModalOverlay', 'closeLoginModalBtn');
+  // Modals Setup — include new mobile header button IDs
+  const rxModalOverlay = setupModal(['openRxModalBtnTop', 'openRxModalBtnMob', 'openRxModalCard', 'openRxModalBtnBanner', 'openRxModalBtnFooter', 'heroUploadRxBtn'], 'rxModalOverlay', 'closeRxModalBtn');
+  const doctorModalOverlay = setupModal(['doctorConsultCard'], 'doctorModalOverlay', 'closeDoctorModalBtn');
+  const labTestModalOverlay = setupModal(['labTestsCard'], 'labTestModalOverlay', 'closeLabTestModalBtn');
+  const insuranceModalOverlay = setupModal(['insuranceCard'], 'insuranceModalOverlay', 'closeInsuranceModalBtn');
+  const offersModalOverlay = setupModal(['bellFloatBtn'], 'offersModalOverlay', 'closeOffersModalBtn');
+  const locationModalOverlay = setupModal(['openLocationModalBtn', 'mobLocationBtn'], 'locationModalOverlay', 'closeLocationModalBtn');
+  const loginModalOverlay = setupModal(['loginBtn', 'loginBtn2'], 'loginModalOverlay', 'closeLoginModalBtn');
+
+  // Mobile cart header button (open cart drawer)
+  const mobCartHeaderBtn = document.getElementById('mobCartHeaderBtn');
+  const cartBtn = document.getElementById('cartBtn');
+  const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+
+  function openCart() {
+    if (cartDrawerOverlay) cartDrawerOverlay.classList.add('active');
+  }
+  function closeCart() {
+    if (cartDrawerOverlay) cartDrawerOverlay.classList.remove('active');
+  }
+  if (mobCartHeaderBtn) mobCartHeaderBtn.addEventListener('click', openCart);
+  if (cartBtn) cartBtn.addEventListener('click', openCart);
+  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+  if (cartDrawerOverlay) cartDrawerOverlay.addEventListener('click', (e) => {
+    if (e.target === cartDrawerOverlay) closeCart();
+  });
+
+  // Mobile search input → redirect to search.html
+  const mobSearchInput = document.getElementById('mobSearchInput');
+  if (mobSearchInput) {
+    mobSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const q = mobSearchInput.value.trim();
+        if (q) window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+        else window.location.href = 'search.html';
+      }
+    });
+  }
+
+  // Mobile location name display
+  const mobLocationName = document.getElementById('mobLocationName');
+
 
 
   /* ---------------------------------------------------------
@@ -244,7 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       const loc = btn.getAttribute('data-loc');
       if (currentLocationName) {
-        currentLocationName.innerHTML = `${loc} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>`;
+        currentLocationName.textContent = loc.split(' (')[0]; // Short version
+      }
+      if (mobLocationName) {
+        mobLocationName.textContent = loc;
       }
       if (locationModalOverlay) locationModalOverlay.classList.remove('active');
       showToast(`Delivery area changed to ${loc}`);
@@ -526,13 +564,12 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------------------------------------------------------
      8. INTERACTIVE SHOPPING CART DRAWER
   --------------------------------------------------------- */
-  const cartBtn = document.getElementById('cartBtn');
+  // Cart button open/close already set up above
   const mobileCartBtn = document.getElementById('mobileCartBtn');
-  const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
-  const closeCartBtn = document.getElementById('closeCartBtn');
   const startShoppingBtn = document.getElementById('startShoppingBtn');
   const cartCountEl = document.getElementById('cartCount');
   const mobileCartCountEl = document.getElementById('mobileCartCount');
+  const mobCartBadgeEl = document.getElementById('mobCartBadge');
   const cartBody = document.getElementById('cartBody');
   const cartEmptyState = document.getElementById('cartEmptyState');
   const cartItemsList = document.getElementById('cartItemsList');
@@ -541,22 +578,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartGrandTotal = document.getElementById('cartGrandTotal');
   const checkoutWaBtn = document.getElementById('checkoutWaBtn');
 
-  // Open/Close Cart Drawer
-  [cartBtn, mobileCartBtn].forEach(btn => {
-    if (btn && cartDrawerOverlay) {
-      btn.addEventListener('click', () => cartDrawerOverlay.classList.add('active'));
-    }
-  });
+  // Mobile bottom cart button
+  if (mobileCartBtn) mobileCartBtn.addEventListener('click', openCart);
 
-  if (closeCartBtn && cartDrawerOverlay) {
-    closeCartBtn.addEventListener('click', () => cartDrawerOverlay.classList.remove('active'));
-    cartDrawerOverlay.addEventListener('click', (e) => {
-      if (e.target === cartDrawerOverlay) cartDrawerOverlay.classList.remove('active');
-    });
-  }
   if (startShoppingBtn && cartDrawerOverlay) {
     startShoppingBtn.addEventListener('click', () => {
-      cartDrawerOverlay.classList.remove('active');
+      closeCart();
       document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
     });
   }
@@ -619,7 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderCart() {
     const totalItems = cartState.reduce((sum, i) => sum + i.qty, 0);
-    [cartCountEl, mobileCartCountEl].forEach(el => {
+    [cartCountEl, mobileCartCountEl, mobCartBadgeEl].forEach(el => {
       if (el) {
         el.textContent = totalItems;
         el.style.transform = 'scale(1.3)';
