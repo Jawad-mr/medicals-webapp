@@ -472,16 +472,31 @@ img {
 
 /* ================= 3. PREMIUM ANIMATED MESH GRADIENT HERO & GLASS SEARCH ================= */
 @keyframes meshGradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%   { background-position: 0% 50%; }
+  33%  { background-position: 50% 0%; }
+  66%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* 
+   The gradient cycles:
+   Deep Teal Green (#073F34) → Indigo (#1E1B4B) → Violet (#4C1D95) → Coral (#F43F5E) → Deep Teal
+   This matches the original green brand + the vivid animation from the reference app screenshot.
+*/
 .apollo-hero,
 .search-hero-banner {
-  background: linear-gradient(135deg, #0A0E27 0%, #1E1B4B 22%, #4C1D95 48%, #831843 76%, #F43F5E 100%);
-  background-size: 260% 260%;
-  animation: meshGradientFlow 12s ease infinite;
+  background: linear-gradient(
+    135deg,
+    #073F34 0%,
+    #0D6B57 12%,
+    #1E1B4B 32%,
+    #4C1D95 52%,
+    #831843 72%,
+    #F43F5E 88%,
+    #073F34 100%
+  );
+  background-size: 300% 300%;
+  animation: meshGradientFlow 14s ease infinite;
   position: relative;
   padding: 85px 0 95px;
   color: #FFFFFF;
@@ -491,9 +506,9 @@ img {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 15% 25%, rgba(124, 58, 237, 0.35) 0%, transparent 50%),
-    radial-gradient(circle at 85% 75%, rgba(244, 63, 94, 0.35) 0%, transparent 50%),
-    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 15% 25%, rgba(7, 63, 52, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(244, 63, 94, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 50% 5%, rgba(255, 255, 255, 0.06) 0%, transparent 40%);
   pointer-events: none;
 }
 
@@ -1039,17 +1054,23 @@ img {
 
 .add-to-cart-btn {
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: 8px;
-  background: var(--teal-light);
-  color: var(--teal-main);
-  font-size: 0.82rem;
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-.add-to-cart-btn:hover {
   background: var(--teal-main);
   color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.add-to-cart-btn:hover {
+  background: var(--teal-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(7,63,52,0.3);
 }
 
 
@@ -1587,16 +1608,70 @@ img {
 }
 
 
+/* ================= SWIGGY-STYLE MOBILE BOTTOM NAVIGATION BAR (Base) ================= */
+.mobile-bottom-nav {
+  display: none; /* shown only in @media mobile */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  background: rgba(12, 14, 24, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 2000;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+}
+.mobile-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+  padding: 0;
+  min-width: 0;
+}
+.mobile-nav-btn svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.mobile-nav-btn.active,
+.mobile-nav-btn:hover {
+  color: #F43F5E;
+}
+.mobile-cart-count {
+  position: absolute;
+  top: 2px;
+  left: calc(50% + 4px);
+  background: #EF4444;
+  color: #FFFFFF;
+  font-size: 0.58rem;
+  font-weight: 800;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(12, 14, 24, 0.96);
+}
+
 /* ================= 12. RESPONSIVE DESIGN ================= */
 
 /* Laptop & Tablet (max-width: 1100px) */
 @media (max-width: 1100px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-  }
-  .hero-illustration {
-    display: none;
-  }
   .quick-actions-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1614,11 +1689,31 @@ img {
   }
 }
 
+/* Tablet (max-width: 900px) */
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .conditions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Mobile & Small Tablet (max-width: 820px) */
 @media (max-width: 820px) {
-  .burger {
+  body {
+    padding-bottom: 66px;
+  }
+  .mobile-bottom-nav {
     display: flex;
   }
+
+  /* Header search hidden on mobile — use bottom nav Search instead */
+  .header-search-wrapper {
+    display: none;
+  }
+
+  /* Main nav collapses */
   .main-nav-bar {
     display: none;
   }
@@ -1628,73 +1723,181 @@ img {
     top: 100%;
     left: 0;
     right: 0;
+    background: #FFFFFF;
+    z-index: 999;
     box-shadow: 0 16px 30px rgba(0,0,0,0.15);
   }
   .nav-links {
     flex-direction: column;
     align-items: flex-start;
     padding: 16px 20px;
+    gap: 8px;
   }
 
+  /* Header compact */
   .brand-group {
-    gap: 12px;
+    gap: 8px;
   }
   .loc-label {
     display: none;
   }
-  .header-phone span,
+  .loc-value {
+    font-size: 0.72rem;
+  }
+  .header-phone {
+    display: none;
+  }
   .login-btn span,
   .upload-rx-head-btn span {
     display: none;
   }
   .upload-rx-head-btn {
-    padding: 9px 12px;
+    padding: 8px 10px;
+  }
+  .login-btn {
+    padding: 6px 10px;
   }
 
+  /* Hero */
+  .apollo-hero,
+  .search-hero-banner {
+    padding: 50px 0 60px;
+  }
+  .hero-glass-card {
+    padding: 16px;
+    border-radius: 16px;
+    margin: 16px auto 0;
+  }
+  .search-box-wrapper {
+    padding: 14px;
+    border-radius: 14px;
+  }
+  .search-input-group {
+    flex-wrap: nowrap;
+  }
+  .search-submit-btn {
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .search-submit-btn svg {
+    display: none;
+  }
+
+  /* Glass tags strip wrap */
+  .glass-tags-strip {
+    gap: 8px;
+    padding: 0 4px;
+  }
+  .glass-tag-pill {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  /* Quick action cards */
   .quick-actions-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
+  /* Conditions */
   .conditions-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
+
+  /* Products — keep 2 columns on mobile */
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
+  .prod-card {
+    padding: 10px;
+  }
+  .prod-img {
+    height: 110px;
+  }
+  .prod-name {
+    font-size: 0.82rem;
+  }
+  .curr-price {
+    font-size: 0.9rem;
+  }
+  .add-to-cart-btn {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  /* Testimonials and footer */
   .testi-grid {
     grid-template-columns: 1fr;
   }
   .footer-top-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Trust banner */
+  .trust-banner-card {
+    padding: 28px 20px;
+    grid-template-columns: 1fr;
+  }
+  .trust-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Contact */
+  .contact-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-map-card iframe {
+    height: 220px;
+  }
+
+  /* Header section tabs */
+  .product-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
   }
 }
 
 /* Small Mobile Phones (max-width: 480px) */
 @media (max-width: 480px) {
-  .apollo-hero {
-    padding: 40px 0 50px;
-  }
   .hero-heading {
-    font-size: 1.75rem;
+    font-size: 1.7rem;
   }
-  .search-input-group {
-    padding: 4px 6px 4px 14px;
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    padding: 5px 12px;
   }
-  .search-submit-btn {
-    padding: 10px 18px;
-    font-size: 0.85rem;
+  .glass-tag-pill {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+  .trust-pill {
+    font-size: 0.72rem;
+    padding: 5px 10px;
   }
   .conditions-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
   .condition-card {
-    padding: 16px 10px;
+    padding: 14px 8px;
   }
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
-  .trust-banner-card {
-    padding: 28px 20px;
+  .prod-img {
+    height: 95px;
+  }
+  .prod-name {
+    font-size: 0.78rem;
+  }
+  .footer-top-grid {
+    padding: 0;
   }
 }
 
@@ -1704,21 +1907,23 @@ img {
 /* Category Strip Button overrides */
 button.strip-item {
   border: none;
-  background: transparent;
-  color: rgba(255,255,255,0.8);
-  font-size: 0.82rem;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 100px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 button.strip-item:hover,
 button.strip-item.active {
-  background: rgba(255,255,255,0.2);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: var(--teal-main);
   font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* Condition Card Button resets */
