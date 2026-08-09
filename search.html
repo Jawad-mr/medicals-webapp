@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Medicines & Healthcare Products | Ganesh Medicals</title>
+<meta name="description" content="Search genuine medicines, health devices, supplements and wellness products at Ganesh Medicals Kankanady, Mangaluru.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="search-page-body">
+
+<!-- Page top scroll progress bar -->
+<div class="scroll-progress" id="progress"></div>
+
+<!-- Toast Container for Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ================= TOP HEADER NAVIGATION ================= -->
+<header id="siteHeader">
+  <!-- Top Utility Bar -->
+  <div class="top-nav-bar">
+    <div class="container top-nav-container">
+      <div class="brand-group">
+        <a href="index.html#home" class="logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#F4E6C4" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">Ganesh Medicals</span>
+            <span class="logo-subtitle">Kankanady • Mangaluru</span>
+          </div>
+        </a>
+
+        <!-- Location Dropdown Selector -->
+        <button class="location-picker" id="openLocationModalBtn" aria-label="Select Delivery Address">
+          <div class="loc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="loc-text">
+            <span class="loc-label">Delivery Address</span>
+            <span class="loc-value" id="currentLocationName">Kankanady (Opp. Market) <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <button class="action-btn upload-rx-head-btn" id="openRxModalBtnTop">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          <span>Upload Prescription</span>
+        </button>
+
+        <a href="tel:07947433320" class="header-phone">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>07947 43320</span>
+        </a>
+
+        <button class="cart-btn" id="cartBtn" aria-label="Shopping Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+        <button class="login-btn" id="loginBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Login</span>
+        </button>
+
+        <button class="burger" id="burger" aria-label="Toggle Navigation Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Links Navigation -->
+  <div class="main-nav-bar">
+    <div class="container">
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#home" class="nav-item">Home</a>
+        <a href="search.html" class="nav-item active">Search Medicines</a>
+        <a href="index.html#consult" class="nav-item" id="navDoctorBtn">Find Doctors</a>
+        <a href="index.html#labtests" class="nav-item" id="navLabBtn">Lab Tests</a>
+        <a href="index.html#whyus" class="nav-item">About Us</a>
+        <a href="index.html#offers" class="nav-item" id="navOffersBtn">Offers <span class="badge-pill">New</span></a>
+        <a href="index.html#insurance" class="nav-item" id="navInsuranceBtn">Buy Insurance <span class="badge-pill">New</span></a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<!-- ================= SEARCH HERO BANNER ================= -->
+<section class="search-hero-banner">
+  <div class="container">
+    <div class="hero-eyebrow">🔍 Ganesh Medicals Product Search</div>
+    <h1>Search <span id="searchBannerQuery">All Products</span></h1>
+
+    <!-- Embedded Search Bar -->
+    <div class="search-box-wrapper" style="max-width: 760px; margin: 0;">
+      <div class="search-input-group">
+        <div class="search-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <input type="text" id="medicineSearchInput" autocomplete="off" placeholder="Search Paracetamol, Accu-Chek, Volini, Horlicks..." aria-label="Search Medicines">
+        <button class="search-clear-btn" id="searchClearBtn" style="display:none;" aria-label="Clear Search">&times;</button>
+        <button class="search-submit-btn" id="searchSubmitBtn">🔍 Search</button>
+      </div>
+
+      <!-- Live Search Autocomplete Popup -->
+      <div class="search-dropdown-results" id="searchResultsDrop">
+        <div class="search-results-header">Popular Searches</div>
+        <div class="search-result-item" data-query="Dolo 650mg Paracetamol">
+          <div class="item-icon">💊</div>
+          <div class="item-info"><strong>Dolo 650mg Paracetamol</strong><span>Pain &amp; Fever Relief</span></div>
+          <span class="item-tag">Prescription</span>
+        </div>
+        <div class="search-result-item" data-query="Accu-Chek Active Glucose Test Strips">
+          <div class="item-icon">💉</div>
+          <div class="item-info"><strong>Accu-Chek Sugar Test Strips</strong><span>Diabetes Monitor</span></div>
+          <span class="item-tag">Device</span>
+        </div>
+        <div class="search-result-item" data-query="Volini Max Instant Pain Relief Spray">
+          <div class="item-icon">🦵</div>
+          <div class="item-info"><strong>Volini Pain Relief Spray</strong><span>Muscle &amp; Joint Care</span></div>
+          <span class="item-tag">OTC</span>
+        </div>
+        <div class="search-result-item" data-query="Horlicks Chocolate Delight Health Drink">
+          <div class="item-icon">🥛</div>
+          <div class="item-info"><strong>Horlicks Health Drink</strong><span>Nutrition Supplement</span></div>
+          <span class="item-tag">Wellness</span>
+        </div>
+        <div class="search-result-item" data-query="Sebamed Baby Gentle Hydrating Lotion">
+          <div class="item-icon">🍼</div>
+          <div class="item-info"><strong>Sebamed Baby Lotion 200ml</strong><span>Baby Care</span></div>
+          <span class="item-tag">Baby Care</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SEARCH LAYOUT (SIDEBAR + RESULTS) ================= -->
+<section class="search-layout-section">
+  <div class="container">
+
+    <!-- Mobile Filter Toggle Button -->
+    <button class="mobile-filter-toggle-btn" id="mobileFilterToggleBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      <span>Filter &amp; Refine Products</span>
+    </button>
+
+    <div class="search-layout-grid">
+
+      <!-- SIDEBAR FILTERS -->
+      <aside class="filter-sidebar" id="filterSidebar">
+        <div class="filter-header">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Filters
+          </h3>
+          <button class="clear-all-filters-btn" id="clearAllSidebarFiltersBtn">Reset All</button>
+        </div>
+
+        <!-- Filter Group 1: Categories -->
+        <div class="filter-group">
+          <div class="filter-group-title">Category</div>
+          <div class="filter-options-list">
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="all" checked>
+              <span class="filter-txt">All Categories</span>
+              <span class="filter-count">8</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="medicines">
+              <span class="filter-txt">Medicines</span>
+              <span class="filter-count">2</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="devices">
+              <span class="filter-txt">Health Devices</span>
+              <span class="filter-count">2</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="wellness">
+              <span class="filter-txt">Wellness &amp; Baby</span>
+              <span class="filter-count">4</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="Diabetes Care">
+              <span class="filter-txt">Diabetes Care</span>
+              <span class="filter-count">1</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarCat" value="Pain Relief">
+              <span class="filter-txt">Pain Relief</span>
+              <span class="filter-count">2</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Filter Group 2: Prescription Type -->
+        <div class="filter-group">
+          <div class="filter-group-title">Prescription Needed</div>
+          <div class="filter-options-list">
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarRx" value="all" checked>
+              <span class="filter-txt">All Products</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarRx" value="yes">
+              <span class="filter-txt">Prescription Required (Rx)</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarRx" value="no">
+              <span class="filter-txt">OTC / Non-Prescription</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Filter Group 3: Price Range -->
+        <div class="filter-group">
+          <div class="filter-group-title">Price Range</div>
+          <div class="filter-options-list">
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarPrice" value="all" checked>
+              <span class="filter-txt">All Prices</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarPrice" value="under-200">
+              <span class="filter-txt">Under ₹200</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarPrice" value="200-500">
+              <span class="filter-txt">₹200 – ₹500</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarPrice" value="500-1000">
+              <span class="filter-txt">₹500 – ₹1,000</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarPrice" value="above-1000">
+              <span class="filter-txt">Above ₹1,000</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Filter Group 4: Discount Threshold -->
+        <div class="filter-group">
+          <div class="filter-group-title">Min Discount</div>
+          <div class="filter-options-list">
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarDiscount" value="0" checked>
+              <span class="filter-txt">All Offers</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarDiscount" value="12">
+              <span class="filter-txt">12% OFF or more</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarDiscount" value="15">
+              <span class="filter-txt">15% OFF or more</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="radio" name="sidebarDiscount" value="20">
+              <span class="filter-txt">20% OFF or more</span>
+            </label>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- MAIN RESULTS CONTENT AREA -->
+      <main class="search-results-main">
+
+        <!-- Top Results Toolbar -->
+        <div class="results-toolbar">
+          <div class="results-count-text">
+            Showing <strong id="resultsCount">8</strong> healthcare items
+          </div>
+
+          <div class="sort-group">
+            <label for="sortSelect" class="sort-label">Sort By:</label>
+            <select id="sortSelect" class="sort-select">
+              <option value="relevance">Relevance</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="discount-desc">Highest Discount %</option>
+              <option value="title-asc">Name: A to Z</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Filter Tags Ribbon -->
+        <div class="applied-filters-ribbon" id="appliedFiltersRibbon" style="display:none;"></div>
+
+        <!-- Product Grid -->
+        <div class="products-grid" id="productsGrid">
+
+          <!-- Product 1 -->
+          <div class="prod-card" data-cat="medicines" data-condition="Pain Relief,Cold &amp; Immunity" data-rx="yes" data-price="28" data-discount="15">
+            <div class="prod-badge">15% OFF</div>
+            <div class="prod-img">
+              <img src="images/dolo650.png" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80';" alt="Dolo 650mg Paracetamol Tablets" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Micro Labs • Rx</span>
+              <h4 class="prod-name">Dolo 650mg Paracetamol Tablets</h4>
+              <span class="prod-pack">Strip of 15 Tablets</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹28.00</span>
+                  <span class="old-price">₹33.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p1" data-name="Dolo 650mg Paracetamol Tablets" data-price="28" data-img="images/dolo650.png" data-brand="Micro Labs">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 2 -->
+          <div class="prod-card" data-cat="devices" data-condition="Diabetes Care" data-rx="no" data-price="860" data-discount="20">
+            <div class="prod-badge">20% OFF</div>
+            <div class="prod-img">
+              <img src="images/accu_chek.png" onerror="this.src='https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&q=80';" alt="Accu-Chek Active Blood Glucose Test Strips" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Accu-Chek • Device</span>
+              <h4 class="prod-name">Accu-Chek Active Blood Glucose Test Strips</h4>
+              <span class="prod-pack">Box of 50 Strips</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹860.00</span>
+                  <span class="old-price">₹1075.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p2" data-name="Accu-Chek Active Glucose Test Strips" data-price="860" data-img="images/accu_chek.png" data-brand="Accu-Chek">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div class="prod-card" data-cat="medicines" data-condition="Pain Relief" data-rx="no" data-price="275" data-discount="10">
+            <div class="prod-badge">10% OFF</div>
+            <div class="prod-img">
+              <img src="images/volini.png" onerror="this.src='https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=400&q=80';" alt="Volini Max Instant Pain Relief Spray" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Sun Pharma • OTC</span>
+              <h4 class="prod-name">Volini Max Instant Pain Relief Spray</h4>
+              <span class="prod-pack">100g Spray Bottle</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹275.00</span>
+                  <span class="old-price">₹305.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p3" data-name="Volini Max Pain Relief Spray" data-price="275" data-img="images/volini.png" data-brand="Sun Pharma">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div class="prod-card" data-cat="wellness" data-condition="Baby Care" data-rx="no" data-price="545" data-discount="12">
+            <div class="prod-badge">12% OFF</div>
+            <div class="prod-img">
+              <img src="images/sebamed_baby.png" onerror="this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&q=80';" alt="Sebamed Baby Gentle Hydrating Lotion" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Sebamed • Baby</span>
+              <h4 class="prod-name">Sebamed Baby Gentle Hydrating Lotion</h4>
+              <span class="prod-pack">200ml Bottle</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹545.00</span>
+                  <span class="old-price">₹620.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p4" data-name="Sebamed Baby Gentle Hydrating Lotion" data-price="545" data-img="images/sebamed_baby.png" data-brand="Sebamed">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="prod-card" data-cat="devices" data-condition="Cardiac Care,Elderly Care" data-rx="no" data-price="2150" data-discount="18">
+            <div class="prod-badge">18% OFF</div>
+            <div class="prod-img">
+              <img src="images/omron_bp.png" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';" alt="Omron Automatic Digital Blood Pressure Monitor" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Omron Healthcare • Device</span>
+              <h4 class="prod-name">Omron Automatic Digital Blood Pressure Monitor</h4>
+              <span class="prod-pack">1 Unit with Arm Cuff</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹2,150.00</span>
+                  <span class="old-price">₹2,620.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p5" data-name="Omron Digital Blood Pressure Monitor" data-price="2150" data-img="images/omron_bp.png" data-brand="Omron">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="prod-card" data-cat="wellness" data-condition="Cold &amp; Immunity" data-rx="no" data-price="245" data-discount="15">
+            <div class="prod-badge">15% OFF</div>
+            <div class="prod-img">
+              <img src="https://images.unsplash.com/photo-1546433178-6260b3773ed0?w=400&q=80" alt="Horlicks Chocolate Delight Health Drink" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Hindustan Unilever • Wellness</span>
+              <h4 class="prod-name">Horlicks Chocolate Delight Health Drink</h4>
+              <span class="prod-pack">500g Jar</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹245.00</span>
+                  <span class="old-price">₹288.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p6" data-name="Horlicks Chocolate Health Drink 500g" data-price="245" data-img="https://images.unsplash.com/photo-1546433178-6260b3773ed0?w=400&q=80" data-brand="Horlicks">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 7 -->
+          <div class="prod-card" data-cat="wellness" data-condition="Cold &amp; Immunity,Elderly Care" data-rx="no" data-price="495" data-discount="10">
+            <div class="prod-badge">10% OFF</div>
+            <div class="prod-img">
+              <img src="https://images.unsplash.com/photo-1550572017-edf706daf081?w=400&q=80" alt="Revital H Multivitamin Capsules" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Sun Pharma • Wellness</span>
+              <h4 class="prod-name">Revital H Daily Health Multivitamin Capsules</h4>
+              <span class="prod-pack">Bottle of 60 Softgels</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹495.00</span>
+                  <span class="old-price">₹550.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p7" data-name="Revital H Multivitamin 60 Softgels" data-price="495" data-img="https://images.unsplash.com/photo-1550572017-edf706daf081?w=400&q=80" data-brand="Sun Pharma">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 8 -->
+          <div class="prod-card" data-cat="wellness" data-condition="Oral Care" data-rx="no" data-price="180" data-discount="14">
+            <div class="prod-badge">14% OFF</div>
+            <div class="prod-img">
+              <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&q=80" alt="Himalaya Purifying Neem Face Wash" loading="lazy">
+            </div>
+            <div class="prod-details">
+              <span class="prod-brand">Himalaya Wellness • Personal Care</span>
+              <h4 class="prod-name">Himalaya Purifying Neem Face Wash</h4>
+              <span class="prod-pack">150ml Tube</span>
+              <div class="prod-price-row">
+                <div class="price-wrap">
+                  <span class="curr-price">₹180.00</span>
+                  <span class="old-price">₹210.00</span>
+                </div>
+                <button class="add-to-cart-btn" data-id="p8" data-name="Himalaya Neem Face Wash 150ml" data-price="180" data-img="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&q=80" data-brand="Himalaya">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Empty search result message -->
+        <div class="no-results-box" id="noResultsBox" style="display:none;">
+          <div class="no-res-icon">🔍</div>
+          <h3>No products matched your search or filters</h3>
+          <p>Try resetting your sidebar filters or searching for alternative terms like Dolo, Accu-Chek, or Volini.</p>
+          <button class="btn btn-gold" id="clearSearchStateBtn">Reset Search &amp; Filters</button>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top-grid">
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#F4E6C4" stroke-width="3" stroke-linecap="round"/></svg></div>
+          <span>Ganesh Medicals</span>
+        </div>
+        <p>Your neighbourhood licensed pharmacy in Kankanady, Mangaluru. Providing genuine medicines and healthcare support for over 55 years.</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Explore Services</h4>
+        <a href="index.html#home">Buy Medicines</a>
+        <a href="search.html">Search Catalog</a>
+        <a href="index.html#whyus">About Chemist Counter</a>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Customer Care</h4>
+        <a href="tel:07947433320">Call Store Hotline</a>
+        <a href="https://wa.me/917947433320" target="_blank">WhatsApp Prescription</a>
+        <button class="footer-modal-link" id="openRxModalBtnFooter">Upload Doctor Note</button>
+      </div>
+    </div>
+
+    <div class="footer-bottom-row">
+      <span>© 2026 Ganesh Medicals, Kankanady, Mangaluru. All rights reserved.</span>
+      <span>Apollo Pharmacy Inspired UI • Trusted Family Chemist</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ================= MODALS & CART DRAWER ================= -->
+<div class="cart-drawer-overlay" id="cartDrawerOverlay">
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <div class="cart-title-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <h3>Your Shopping Cart</h3>
+      </div>
+      <button class="cart-close-btn" id="closeCartBtn">&times;</button>
+    </div>
+
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty-state" id="cartEmptyState">
+        <div class="empty-cart-ic">🛒</div>
+        <h4>Your cart is empty</h4>
+        <p>Browse our products and add items to your cart.</p>
+        <button class="btn btn-gold" id="startShoppingBtn">Explore Medicines</button>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList"></div>
+    </div>
+
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">₹0.00</strong>
+      </div>
+      <div class="cart-summary-row">
+        <span>Kankanady Store Delivery</span>
+        <strong class="free-delivery">FREE</strong>
+      </div>
+      <div class="cart-summary-row total-row">
+        <span>Grand Total</span>
+        <strong id="cartGrandTotal">₹0.00</strong>
+      </div>
+
+      <button class="btn btn-submit-wa" id="checkoutWaBtn">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="#FFFFFF"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.348.687 4.53 1.872 6.37L4 29l7.86-1.834A11.93 11.93 0 0 0 16.001 27C22.63 27 28 21.63 28 15S22.63 3 16.001 3zm6.44 16.94c-.27.76-1.57 1.46-2.16 1.55-.55.08-1.24.12-2-.12-.46-.14-1.05-.34-1.8-.66-3.17-1.37-5.24-4.55-5.4-4.76-.16-.21-1.29-1.71-1.29-3.26s.81-2.31 1.1-2.62c.29-.31.63-.39.84-.39.21 0 .42 0 .6.01.19.01.45-.07.7.54.27.65.9 2.2.98 2.36.08.16.13.35.03.56-.1.21-.16.34-.31.52-.16.18-.33.4-.47.54-.16.16-.32.33-.14.64.19.31.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.56 1.59.31.16.49.14.67-.05.19-.19.79-.92.99-1.24.21-.31.42-.26.7-.16.29.1 1.83.87 2.14 1.03.32.16.53.24.6.37.08.14.08.79-.19 1.54z"/></svg>
+        Order via WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Prescription Modal -->
+<div class="modal-overlay" id="rxModalOverlay">
+  <div class="modal-card">
+    <button class="modal-close-btn" id="closeRxModalBtn">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon">📄</div>
+      <div>
+        <h3>Upload Doctor Prescription</h3>
+        <p>Send your Rx photo directly to Ganesh Medicals pharmacists for instant order preparation.</p>
+      </div>
+    </div>
+
+    <form id="rxUploadForm" onsubmit="return false;">
+      <div class="upload-dropzone" id="dropzone">
+        <input type="file" id="rxFileInput" accept="image/*,.pdf" style="display:none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p><strong>Click to browse</strong> or drag and drop prescription image/PDF here</p>
+        <span id="fileSelectedName" class="file-name-preview">Supported formats: JPG, PNG, PDF</span>
+      </div>
+
+      <div class="form-group">
+        <label for="custName">Patient Name</label>
+        <input type="text" id="custName" placeholder="Enter patient full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="custPhone">Mobile Number (WhatsApp)</label>
+        <input type="tel" id="custPhone" placeholder="Enter 10-digit mobile number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="custLoc">Delivery Location in Mangaluru</label>
+        <select id="custLoc">
+          <option value="Kankanady (Opp. Market)">Kankanady (Opp. Market)</option>
+          <option value="Pumpwell">Pumpwell</option>
+          <option value="Statebank / Hampankatta">Statebank / Hampankatta</option>
+          <option value="Falnir">Falnir</option>
+          <option value="Valencia / Bendorewell">Valencia / Bendorewell</option>
+          <option value="Father Muller Road">Father Muller Road</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-submit-rx" id="submitRxBtn">
+        Send Order to Pharmacist via WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Location Modal -->
+<div class="modal-overlay" id="locationModalOverlay">
+  <div class="modal-card">
+    <button class="modal-close-btn" id="closeLocationModalBtn">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon">📍</div>
+      <div>
+        <h3>Select Delivery Address</h3>
+        <p>Choose your area in Mangaluru for store pickup or local home delivery.</p>
+      </div>
+    </div>
+
+    <div class="location-list">
+      <button class="location-item-btn active" data-loc="Kankanady (Opp. Market)">
+        <strong>Kankanady</strong>
+        <span>Opp. Kankanady Market, PIN 575002</span>
+      </button>
+      <button class="location-item-btn" data-loc="Father Muller Road">
+        <strong>Father Muller Road</strong>
+        <span>Near Hospital Campus, PIN 575002</span>
+      </button>
+      <button class="location-item-btn" data-loc="Pumpwell Junction">
+        <strong>Pumpwell Junction</strong>
+        <span>Highway Circle Area, Mangaluru</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModalOverlay">
+  <div class="modal-card">
+    <button class="modal-close-btn" id="closeLoginModalBtn">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon">👤</div>
+      <div>
+        <h3>Customer Login</h3>
+        <p>Log in to access your order history &amp; prescription uploads.</p>
+      </div>
+    </div>
+
+    <form id="loginForm" onsubmit="return false;">
+      <div class="form-group">
+        <label for="loginPhone">Mobile Number</label>
+        <input type="tel" id="loginPhone" placeholder="Enter 10-digit mobile number" required>
+      </div>
+      <button type="submit" class="btn btn-gold full-width-btn">Get OTP &amp; Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- Floating Action Buttons -->
+<a href="https://wa.me/917947433320" target="_blank" class="wa-float" aria-label="Chat on WhatsApp with Ganesh Medicals">
+  <svg viewBox="0 0 32 32"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.348.687 4.53 1.872 6.37L4 29l7.86-1.834A11.93 11.93 0 0 0 16.001 27C22.63 27 28 21.63 28 15S22.63 3 16.001 3zm6.44 16.94c-.27.76-1.57 1.46-2.16 1.55-.55.08-1.24.12-2-.12-.46-.14-1.05-.34-1.8-.66-3.17-1.37-5.24-4.55-5.4-4.76-.16-.21-1.29-1.71-1.29-3.26s.81-2.31 1.1-2.62c.29-.31.63-.39.84-.39.21 0 .42 0 .6.01.19.01.45-.07.7.54.27.65.9 2.2.98 2.36.08.16.13.35.03.56-.1.21-.16.34-.31.52-.16.18-.33.4-.47.54-.16.16-.32.33-.14.64.19.31.83 1.37 1.78 2.22 1.22 1.09 2.25 1.43 2.56 1.59.31.16.49.14.67-.05.19-.19.79-.92.99-1.24.21-.31.42-.26.7-.16.29.1 1.83.87 2.14 1.03.32.16.53.24.6.37.08.14.08.79-.19 1.54z"/></svg>
+</a>
+
+<script src="js/script.js"></script>
+</body>
+</html>
