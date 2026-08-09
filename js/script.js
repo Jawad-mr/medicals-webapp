@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!toastContainer) return;
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    toast.innerHTML = type === 'success' ? `<span>✓</span> ${message}` : `<span>ℹ</span> ${message}`;
+    const iconSvg = type === 'success' 
+      ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>` 
+      : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+    toast.innerHTML = `<span>${iconSvg}</span> ${message}`;
     toastContainer.appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = '0';
@@ -420,6 +423,28 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerSearchRedirect();
       });
     }
+
+    // Glass Hero Search Box Listeners
+    const heroSearchInput = document.getElementById('heroSearchInput');
+    const heroSearchSubmitBtn = document.getElementById('heroSearchSubmitBtn');
+
+    if (heroSearchInput) {
+      heroSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const val = heroSearchInput.value.trim();
+          window.location.href = `search.html?q=${encodeURIComponent(val)}`;
+        }
+      });
+    }
+
+    if (heroSearchSubmitBtn) {
+      heroSearchSubmitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const val = heroSearchInput ? heroSearchInput.value.trim() : '';
+        window.location.href = `search.html?q=${encodeURIComponent(val)}`;
+      });
+    }
   }
 
   function triggerSearchRedirect() {
@@ -502,10 +527,12 @@ document.addEventListener('DOMContentLoaded', () => {
      8. INTERACTIVE SHOPPING CART DRAWER
   --------------------------------------------------------- */
   const cartBtn = document.getElementById('cartBtn');
+  const mobileCartBtn = document.getElementById('mobileCartBtn');
   const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
   const closeCartBtn = document.getElementById('closeCartBtn');
   const startShoppingBtn = document.getElementById('startShoppingBtn');
   const cartCountEl = document.getElementById('cartCount');
+  const mobileCartCountEl = document.getElementById('mobileCartCount');
   const cartBody = document.getElementById('cartBody');
   const cartEmptyState = document.getElementById('cartEmptyState');
   const cartItemsList = document.getElementById('cartItemsList');
@@ -515,9 +542,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkoutWaBtn = document.getElementById('checkoutWaBtn');
 
   // Open/Close Cart Drawer
-  if (cartBtn && cartDrawerOverlay) {
-    cartBtn.addEventListener('click', () => cartDrawerOverlay.classList.add('active'));
-  }
+  [cartBtn, mobileCartBtn].forEach(btn => {
+    if (btn && cartDrawerOverlay) {
+      btn.addEventListener('click', () => cartDrawerOverlay.classList.add('active'));
+    }
+  });
+
   if (closeCartBtn && cartDrawerOverlay) {
     closeCartBtn.addEventListener('click', () => cartDrawerOverlay.classList.remove('active'));
     cartDrawerOverlay.addEventListener('click', (e) => {
@@ -545,7 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Button Feedback
       const originalText = btn.textContent;
-      btn.textContent = '✓ Added';
+      btn.textContent = 'ADDED';
       btn.style.background = '#10B981';
       btn.style.color = '#FFFFFF';
       setTimeout(() => {
@@ -589,11 +619,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderCart() {
     const totalItems = cartState.reduce((sum, i) => sum + i.qty, 0);
-    if (cartCountEl) {
-      cartCountEl.textContent = totalItems;
-      cartCountEl.style.transform = 'scale(1.3)';
-      setTimeout(() => cartCountEl.style.transform = 'scale(1)', 200);
-    }
+    [cartCountEl, mobileCartCountEl].forEach(el => {
+      if (el) {
+        el.textContent = totalItems;
+        el.style.transform = 'scale(1.3)';
+        setTimeout(() => el.style.transform = 'scale(1)', 200);
+      }
+    });
 
     if (cartState.length === 0) {
       if (cartEmptyState) cartEmptyState.style.display = 'block';
